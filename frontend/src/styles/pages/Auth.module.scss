@@ -1,0 +1,105 @@
+@import "../_variables";
+
+
+.authContainer {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .authWrapper {
+        width: 36rem;
+
+        .authFormContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .title {
+                font-size: nth($fontSize, 9);
+                text-align: center;
+                font-weight: 400;
+                margin-bottom: 0.8rem;
+            }
+
+            .description {
+                font-weight: 400;
+                font-size: nth($fontSize, 3);
+                color: var(--text-hover);
+                text-align: center;
+                line-height: 1.5;
+
+                span {
+                    font-weight: 600;
+                }
+            }
+
+            .authForm {
+                padding: 0 3rem;
+                margin-top: 2rem;
+
+                .authEmailInput {
+                    margin-bottom: 0;
+                }
+
+                .loginEmailItem {
+                    position: relative;
+
+                    .loginEmailEditBtn {
+                        position: absolute;
+                        right: 1rem;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+                }
+
+                .forgotPasswordBtn {
+                    margin-top: 1rem;
+                 
+                }
+            }
+
+            .divider {
+                color: var(--text);
+                margin: 1.8rem 0;
+                font-weight: 600;
+
+                &::before, &::after {
+                    background-color: var(--border)
+                }
+                
+            }
+
+            .termsText {
+                color: var(--text-hover);
+                font-size: nth($fontSize, 3);
+                margin-top: 1rem;
+                font-weight: 400;
+            }
+
+            .googleButton {
+                background: none;
+                border: 1px solid var(--input-border-primary);
+                display: flex;
+                justify-content: center;    
+                align-items: center;
+                font-weight: 400;
+                position: relative;
+
+                .googleIcon {
+                    position: absolute;
+                    left: 1rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    font-size: nth($fontSize, 4);
+
+                }
+            }
+        }
+
+
+    }
+
+}
