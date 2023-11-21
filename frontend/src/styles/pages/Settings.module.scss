@@ -27,6 +27,16 @@
                 color: var(--text-hover);
 
             }
+
+
+            .settingsSectionButton {
+                width: fit-content;
+                font-size: nth($fontSize, 1);
+                margin-top: 1.2rem;
+                padding: 0 1rem;
+                border-radius: 4px;
+                height: 2rem;
+            }
         }
         .settingsInputSection {
 

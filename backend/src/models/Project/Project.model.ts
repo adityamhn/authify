@@ -12,12 +12,19 @@ export interface TenantsDoc {
   type: "custom" | "global";
 }
 
+export interface ApiKeyDoc {
+  key: string;
+  createdAt: Date;
+  identifier: string;
+}
+
 export interface ProjectDoc extends mongoose.Document {
   projectName: string;
   projectKey: string;
   projectMembers: ProjectMembersDoc[];
   createdAt: Date;
   tenants: TenantsDoc[];
+  apiKeys: ApiKeyDoc[];
 }
 
 const ProjectSchema = new Schema({
@@ -60,6 +67,21 @@ const ProjectSchema = new Schema({
         required: true,
         enum: ["custom", "global"],
         default: "custom",
+      },
+    },
+  ],
+  apiKeys: [
+    {
+      key: {
+        type: String,
+        required: true,
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+      identifier: {
+        type: String,
       },
     },
   ],

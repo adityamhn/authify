@@ -196,35 +196,33 @@
 .policyTableContainer {
     padding-bottom: 4rem;
     :global {
-
         table {
             width: auto !important;
             min-width: auto !important;
-            }
+        }
         .ant-table {
             width: 100%;
 
             .ant-table-content {
+                /* width */
+                &::-webkit-scrollbar {
+                    height: 1px;
+                }
 
-        /* width */
-        &::-webkit-scrollbar {
-            height: 1px;
-        }
+                /* Track */
+                &::-webkit-scrollbar-track {
+                    background: transparent;
+                }
 
-        /* Track */
-        &::-webkit-scrollbar-track {
-            background: transparent;
-        }
+                /* Handle */
+                &::-webkit-scrollbar-thumb {
+                    background: var(--border);
+                }
 
-        /* Handle */
-        &::-webkit-scrollbar-thumb {
-            background: var(--border);
-        }
-
-        /* Handle on hover */
-        &::-webkit-scrollbar-thumb:hover {
-            background: var(--border);
-        }
+                /* Handle on hover */
+                &::-webkit-scrollbar-thumb:hover {
+                    background: var(--border);
+                }
             }
             .ant-table-container {
                 .ant-table-thead {
@@ -250,11 +248,9 @@
                             justify-content: center;
                         }
 
-
                         &:has(.isPolicyTableActionRow) {
                             border: none;
                         }
-
                     }
                 }
             }
@@ -317,7 +313,6 @@
             to {
                 transform: translateY(0%);
             }
-            
         }
 
         @keyframes slidedown {
@@ -327,9 +322,7 @@
             to {
                 transform: translateY(100%);
             }
-            
         }
-
 
         .saveButton {
             width: fit-content;
@@ -342,7 +335,38 @@
             height: 2.2rem;
             color: var(--text-secondary);
             font-size: nth($fontSize, 2);
+        }
+    }
+}
 
+.settingsTableContainer {
+    background: var(--card-bg);
+    padding: 0 0.5rem 1rem 0.5rem;
+    border-radius: 4px;
+
+
+    .settingsTableDeleteButton {
+        color: var(--text-secondary);
+        height: 2rem;
+        width: 2rem;
+
+        &:hover {
+            color: var(--danger) !important;
+        }
+    }
+
+    .settingsApiKeySection {
+        gap: 12px;
+
+        .apiKey {
+            max-width: 15rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .copyIcon {
+            cursor: pointer;
         }
     }
 }

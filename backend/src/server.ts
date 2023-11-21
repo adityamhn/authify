@@ -23,6 +23,7 @@ import { resourceRoutes } from "./routes/resource.routes";
 import { tenantRoutes } from "./routes/tenant.routes";
 import { roleRoutes } from "./routes/role.routes";
 import { userDirectoryRoutes } from "./routes/user-directory.routes";
+import { sdkRoutes } from "./routes/sdk.routes";
 
 declare module "express-session" {
   export interface SessionData {
@@ -54,6 +55,33 @@ const initializeApp = async () => {
 
   const app = express();
   const port = (await getSecrets("PORT")) ?? (8080 as number);
+
+  app.use(
+    express.urlencoded({
+      extended: true,
+    })
+  );
+
+  app.use((req, res, next) => {
+    express.json({
+      limit: "5mb",
+      type: ["application/json", "text/plain"],
+    })(req, res, (err) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).json({ message: "Invalid JSON" });
+      } else {
+        next();
+      }
+    });
+  });
+
+  app.use(cookieParser());
+
+  app.use(mongoSanitize());
+
+  // SDK routes
+  app.use("/api/sdk", sdkRoutes);
 
   const localWhitelist = [
     "http://127.0.0.1:8080",
@@ -91,31 +119,8 @@ const initializeApp = async () => {
     credentials: true,
     methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
   };
+
   app.use(cors(corsOptions));
-
-  app.use(
-    express.urlencoded({
-      extended: true,
-    })
-  );
-
-  app.use((req, res, next) => {
-    express.json({
-      limit: "5mb",
-      type: ["application/json", "text/plain"],
-    })(req, res, (err) => {
-      if (err) {
-        console.log(err);
-        return res.status(400).json({ message: "Invalid JSON" });
-      } else {
-        next();
-      }
-    });
-  });
-
-  app.use(cookieParser());
-
-  app.use(mongoSanitize());
 
   // @ts-ignore
   let redisStore = new RedisStore({ client: redisClient });

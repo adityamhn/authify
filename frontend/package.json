@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "antd": "^5.9.4",
     "axios": "^1.5.1",
+    "moment": "^2.29.4",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",

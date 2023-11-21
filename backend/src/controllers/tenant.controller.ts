@@ -59,7 +59,6 @@ export const getTenantsList = async (req: Request, res: Response) => {
   }
 };
 
-// checked
 export const createNewTenant = async (req: Request, res: Response) => {
   try {
     const { userId, projectId } = res.locals;
@@ -140,7 +139,6 @@ export const createNewTenant = async (req: Request, res: Response) => {
   }
 };
 
-// checked
 export const editTenant = async (req: Request, res: Response) => {
   try {
     const { userId, projectId } = res.locals;
@@ -204,6 +202,12 @@ export const editTenant = async (req: Request, res: Response) => {
     if (!tenant) {
       return res.status(400).json({ message: "Tenant not found" });
     }
+    
+    if (tenant.type === "global") {
+      return res
+        .status(400)
+        .json({ message: "Global tenant cannot be edited" });
+    }
 
     tenant.tenantName = tenantName;
     tenant.description = description;
@@ -221,7 +225,6 @@ export const editTenant = async (req: Request, res: Response) => {
   }
 };
 
-// checked
 export const getAllTenants = async (req: Request, res: Response) => {
   try {
     const { userId, projectId } = res.locals;
