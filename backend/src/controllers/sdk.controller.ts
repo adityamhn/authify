@@ -122,6 +122,7 @@ export const checkPermission = async (req: Request, res: Response) => {
 
     return res.status(200).json({
       message: "User access is granted",
+      result: true,
     });
   } catch (err) {
     console.log(err);
