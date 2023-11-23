@@ -195,7 +195,7 @@ export const getAllResources = async (req: Request, res: Response) => {
     };
 
     if (filters?.action?.length > 0) {
-      query["actions.action"] = { $in: filters.action };
+      query["actions"] = { $in: filters.action };
     }
 
     if (filters?.tenant?.length > 0) {

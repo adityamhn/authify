@@ -15,10 +15,46 @@
         margin: 2rem 0;
 
         .filterContainer {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
             .filterbar {
                 width: 40rem;
                 border-radius: 4px;
                 height: 2.3rem;
+            }
+
+            .filterbarLogs {
+                width: 30rem;
+            }
+
+            .filterRangePicker {
+                background-color: transparent;
+                outline: none;
+                border: 0.5px solid var(--input-border-secondary) !important;
+                height: 2.3rem;
+                border-radius: 4px;
+                font-size: 0.9rem;
+
+                :global {
+                    .ant-picker-input {
+
+                        input {
+                            background-color: transparent !important;
+                            color: var(--text-secondary);
+                      
+                            &::placeholder {
+                              color: var(--placeholder);
+                            }
+                        }
+
+
+                    }
+
+                    .anticon {
+                        color: var(--text-secondary);
+                    }
+                }
             }
         }
     }
@@ -40,11 +76,9 @@
                 border-radius: 30px;
                 background-color: transparent;
 
-
                 &:hover {
                     color: var(--text-hover) !important;
                 }
-
             }
 
             .ant-segmented-item-label {
@@ -170,7 +204,6 @@
         }
     }
 }
-
 
 .policyDashboardContainer {
     position: relative;

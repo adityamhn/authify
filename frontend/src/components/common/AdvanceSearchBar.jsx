@@ -52,26 +52,26 @@ const filterOptions = {
       helpText: "Search users in this tenant"
     }
   ],
-  "policy": [
+  "logs": [
     {
       label: "resource",
       value: "resource=",
-      helpText: "Search roles with this resource"
+      helpText: "Search logs with this resource"
     },
     {
       label: "action",
       value: "action=",
-      helpText: "Search resources with this action"
+      helpText: "Search logs with this action"
     },
     {
       label: "user",
       value: "user=",
-      helpText: "Search tenants with this user"
+      helpText: "Search logs with this user"
     },
     {
       label: "tenant",
       value: "tenant=",
-      helpText: "Search roles in this tenant"
+      helpText: "Search logs with this tenant"
     },
   ],
 }
@@ -116,6 +116,7 @@ const AdvanceSearchBar = (props) => {
           className={`${styles.searchIcon} site-form-item-icon `}
         />
       }
+      styles={props.styles}
       addonBefore={filterType ? filtersSelect : null}
       value={inputValue}
       onChange={(e) => setInputValue(e.target.value)}

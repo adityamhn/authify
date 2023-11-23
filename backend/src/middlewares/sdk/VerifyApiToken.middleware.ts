@@ -10,7 +10,9 @@ export const verifyApiToken = async (
   const token = req.headers["x-authify-token"];
 
   if (!token) {
-    return res.status(401).json({ message: "Invalid Configuration! Api Token is not found." });
+    return res
+      .status(401)
+      .json({ message: "Invalid Configuration! Api Token is not found." });
   }
 
   const project = await ProjectModel.findOne({
@@ -25,18 +27,6 @@ export const verifyApiToken = async (
     return res.status(401).json({ message: "Invalid Api Token!" });
   }
 
-  const { tenant: tenantKey } = req.body;
-
-  const tenant = await TenantModel.findOne({
-    tenantKey,
-    projectId: project._id,
-  });
-
-  if (!tenant) {
-    return res.status(401).json({ message: "Invalid Tenant Key!" });
-  }
-
   res.locals.projectId = project._id;
-  res.locals.tenantId = tenant._id;
   next();
 };

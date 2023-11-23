@@ -21,6 +21,31 @@ export const createNewProject = async ({ projectKey, projectName }) => {
   return response.data;
 };
 
+export const getAllLogs = async ({
+  projectKey,
+  q = "",
+  rsid,
+  ending_before,
+  starting_after,
+  start_date,
+  end_date,
+}) => {
+  const response = await apiClient.post(
+    `/project/logs?q=${q}${
+      starting_after ? `&starting_after=${starting_after}` : ""
+    }${ending_before ? `&ending_before=${ending_before}` : ""}
+    ${start_date ? `&start_date=${start_date}` : ""}
+    ${end_date ? `&end_date=${end_date}` : ""}`,
+    { projectKey },
+    rsid && {
+      headers: {
+        Cookie: `rsid=${rsid}`,
+      },
+    }
+  );
+  return response.data;
+};
+
 export const createNewApiKey = async ({ projectKey, identifier }) => {
   const response = await apiClient.post("/project/api-key/create", {
     projectKey,
