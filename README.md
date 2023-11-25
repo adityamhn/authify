@@ -64,7 +64,12 @@ Now once you are in the frontend directory, execute the command below to start t
 npm run dev
 ```
 
-Confirm the frontend is operational by navigating to [http://127.0.0.1:3000](http://127.0.0.1:3000).
+Confirm the frontend is operational by navigating to [http://127.0.0.1:3000](http://127.0.0.1:3000).  
+
+#### YAY!!! NOW YOU ARE SET TO START HACKING!
+![Alt Text](https://media.tenor.com/YbmQHDSJvbkAAAAC/thumbs-up-hacker.gif)
+
+
 
 ### Contributing to Authify
 We welcome contributions from the community! If you want to contribute through code or documentation, the [Contributing guide](https://github.com/adityamhn/authify/blob/main/CONTRIBUTING.md) is the best place to start. If you have questions, feel free to ask.
