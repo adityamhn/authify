@@ -41,6 +41,8 @@ cd ./backend
 Now once you are in the backend directory, execute the command below to start the backend server:
 
 ```bash
+# run "npm install" to install all the dependency packages
+
 npm run dev & npm run watch
 ```
 
@@ -57,6 +59,8 @@ cd ./frontend
 Now once you are in the frontend directory, execute the command below to start the frontend server:
 
 ```bash
+# run "npm install" to install all the dependency packages
+
 npm run dev
 ```
 
