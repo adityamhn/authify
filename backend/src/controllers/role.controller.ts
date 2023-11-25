@@ -301,8 +301,6 @@ export const getAllRoles = async (req: Request, res: Response) => {
       toFind: ["resource", "tenant"],
     });
 
-    console.log(filters);
-
     let tenantIds = [];
     if (filters?.tenant?.length > 0) {
       tenantIds = await TenantModel.find(

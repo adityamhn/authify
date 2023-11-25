@@ -8,7 +8,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { RiExternalLinkFill } from 'react-icons/ri'
 
 
-const LogsTable = ({ logs, totalLogs, first, last, projectKey }) => {
+const LogsTable = ({ logs, first, last, projectKey }) => {
     const pathname = usePathname()
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -52,16 +52,16 @@ const LogsTable = ({ logs, totalLogs, first, last, projectKey }) => {
 
     const handleNextPage = () => {
         if (last) return;
-        router.push(`${pathname}?${q ? "q=" + q + "&" : ""}starting_after=${resources[resources.length - 1].resourceKey}`)
+        router.push(`${pathname}?${q ? "q=" + q + "&" : ""}starting_after=${logs[logs.length - 1]._id}`)
     }
 
     const handlePreviousPage = () => {
         if (first) return;
-        router.push(`${pathname}?${q ? "q=" + q + "&" : ""}ending_before=${resources[0].resourceKey}`)
+        router.push(`${pathname}?${q ? "q=" + q + "&" : ""}ending_before=${logs[0]._id}`)
     }
 
 
-    const handleLogDetailsClick = (type,key) => {
+    const handleLogDetailsClick = (type, key) => {
         if (type === "user") router.push(`/${projectKey}/users?q=${key}`);
         else if (type === "resource") router.push(`/${projectKey}/resources?q=${key}`);
         else if (type === "tenant") router.push(`/${projectKey}/tenants?q=${key}`);
@@ -82,51 +82,51 @@ const LogsTable = ({ logs, totalLogs, first, last, projectKey }) => {
                     expandedRowRender: (record, index) => (
                         <>
                             <div key={record._id} className={`${styles.logDetailsContainer} ${index % 2 === 0 ? styles.evenRow : styles.oddRow}`}>
-                               <div className={styles.logDetails}>
-                               <div className={styles.logDetailsHeading}>Details</div>
-                                <Row align="middle" className={styles.logDetailsRow}>
-                                    <div className={styles.logDetailsSection}>
-                                        <div className={styles.logDetailsKey}>Timestamp</div>
-                                        <div className={styles.logDetailsValue}>{moment.unix(record.timestamp).format("lll") || "-"}</div>
-                                    </div>
-                                    <div className={styles.logDetailsSection}>
-                                        <div className={styles.logDetailsKey}>User key</div>
-                                        <div onClick={() => handleLogDetailsClick("user",record.userKey)} className={styles.logDetailsClickableValue}>{record.userKey || "-"}<RiExternalLinkFill /></div>
-                                    </div>
-                                    <div className={styles.logDetailsSection}>
-                                        <div className={styles.logDetailsKey}>Resource</div>
-                                        <div onClick={() => handleLogDetailsClick("resource",record.resourceKey)} className={styles.logDetailsClickableValue}>{record.resourceKey || "-"}<RiExternalLinkFill /></div>
-                                    </div>
-                                    <div className={styles.logDetailsSection}>
-                                        <div className={styles.logDetailsKey}>Action performed</div>
-                                        <div onClick={() => handleLogDetailsClick("action",`${record.resourceKey}:${record.action}`)} className={styles.logDetailsClickableValue}>{record.action || "-"}<RiExternalLinkFill /></div>
-                                    </div>
-                                    <div className={styles.logDetailsSection}>
-                                        <div className={styles.logDetailsKey}>Tenant</div>
-                                        <div onClick={() => handleLogDetailsClick("tenant",record.tenantKey)} className={styles.logDetailsClickableValue}>{record.tenantKey || "-"}<RiExternalLinkFill /></div>
-                                    </div>
-                                    <div className={styles.logDetailsSection}>
-                                        <div className={styles.logDetailsKey}>decision taken</div>
-                                        <div className={styles.logDetailsValue}>{record.decision === "allowed" ? <div className={styles.allowedDecision}>ALLOWED</div> : record.decision === "denied" ? <div className={styles.deniedDecision}>DENIED</div> : '-'}</div>
-                                    </div>
-                                    <div className={styles.logDetailsSection}>
-                                        <div className={styles.logDetailsKey}>Reason</div>
-                                        <div className={styles.logDetailsValue}>{record.reason || "-"}</div>
-                                    </div>
-                                </Row>
+                                <div className={styles.logDetails}>
+                                    <div className={styles.logDetailsHeading}>Details</div>
+                                    <Row align="middle" className={styles.logDetailsRow}>
+                                        <div className={styles.logDetailsSection}>
+                                            <div className={styles.logDetailsKey}>Timestamp</div>
+                                            <div className={styles.logDetailsValue}>{moment.unix(record.timestamp).format("lll") || "-"}</div>
+                                        </div>
+                                        <div className={styles.logDetailsSection}>
+                                            <div className={styles.logDetailsKey}>User key</div>
+                                            <div onClick={() => handleLogDetailsClick("user", record.userKey)} className={styles.logDetailsClickableValue}>{record.userKey || "-"}<RiExternalLinkFill /></div>
+                                        </div>
+                                        <div className={styles.logDetailsSection}>
+                                            <div className={styles.logDetailsKey}>Resource</div>
+                                            <div onClick={() => handleLogDetailsClick("resource", record.resourceKey)} className={styles.logDetailsClickableValue}>{record.resourceKey || "-"}<RiExternalLinkFill /></div>
+                                        </div>
+                                        <div className={styles.logDetailsSection}>
+                                            <div className={styles.logDetailsKey}>Action performed</div>
+                                            <div onClick={() => handleLogDetailsClick("action", `${record.resourceKey}:${record.action}`)} className={styles.logDetailsClickableValue}>{record.action || "-"}<RiExternalLinkFill /></div>
+                                        </div>
+                                        <div className={styles.logDetailsSection}>
+                                            <div className={styles.logDetailsKey}>Tenant</div>
+                                            <div onClick={() => handleLogDetailsClick("tenant", record.tenantKey)} className={styles.logDetailsClickableValue}>{record.tenantKey || "-"}<RiExternalLinkFill /></div>
+                                        </div>
+                                        <div className={styles.logDetailsSection}>
+                                            <div className={styles.logDetailsKey}>decision taken</div>
+                                            <div className={styles.logDetailsValue}>{record.decision === "allowed" ? <div className={styles.allowedDecision}>ALLOWED</div> : record.decision === "denied" ? <div className={styles.deniedDecision}>DENIED</div> : '-'}</div>
+                                        </div>
+                                        <div className={styles.logDetailsSection}>
+                                            <div className={styles.logDetailsKey}>Reason</div>
+                                            <div className={styles.logDetailsValue}>{record.reason || "-"}</div>
+                                        </div>
+                                    </Row>
                                 </div>
                                 <div className={styles.logDetails}>
-                                <div className={styles.logDetailsHeading}>Metadata</div>
-                                <Row align="middle" className={styles.logDetailsRow}>
-                                    {(record.metadata && Object.keys(record.metadata).length > 0) ? Object.keys(record.metadata).map((key, index) => (
-                                        <>
-                                            <div key={index} className={styles.logDetailsSection}>
-                                                <div className={styles.logDetailsKey}>{key}</div>
-                                                <div className={styles.logDetailsValue}>{record.metadata[key]}</div>
-                                            </div>
-                                        </>
-                                    )) : "-"}
-                                </Row>
+                                    <div className={styles.logDetailsHeading}>Metadata</div>
+                                    <Row align="middle" className={styles.logDetailsRow}>
+                                        {(record.metadata && Object.keys(record.metadata).length > 0) ? Object.keys(record.metadata).map((key, index) => (
+                                            <>
+                                                <div key={index} className={styles.logDetailsSection}>
+                                                    <div className={styles.logDetailsKey}>{key}</div>
+                                                    <div className={styles.logDetailsValue}>{record.metadata[key]}</div>
+                                                </div>
+                                            </>
+                                        )) : "-"}
+                                    </Row>
                                 </div>
                             </div>
                         </>),
@@ -139,7 +139,6 @@ const LogsTable = ({ logs, totalLogs, first, last, projectKey }) => {
                     },
                 }} />
             <Row align="middle" justify="end" className={styles.tableFooter}>
-                {/* <div className={styles.itemsCount}><span>{totalResources ?? 0}</span>Resources</div> */}
                 <div className={styles.paginationButtons}>
                     <PrimaryButton buttonType="pagination" disabled={!!first} onClick={handlePreviousPage}>Previous</PrimaryButton>
                     <PrimaryButton buttonType="pagination" disabled={!!last} onClick={handleNextPage}>Next</PrimaryButton>

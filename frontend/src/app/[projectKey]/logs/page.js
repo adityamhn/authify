@@ -7,7 +7,7 @@ import React from "react";
 
 const LogsPage = async ({ params, searchParams }) => {
   const { projectKey } = params;
-  const { q, starting_after, ending_before, start_date, end_date } = searchParams;
+  const { q, starting_after, ending_before } = searchParams;
 
   const cookieStore = cookies();
   const rsid = cookieStore.get("rsid");
@@ -19,26 +19,20 @@ const LogsPage = async ({ params, searchParams }) => {
       q,
       starting_after,
       ending_before,
-      start_date,
-      end_date,
     })
   );
 
   const revalidate = async () => {
     "use server";
-    revalidatePath(`/${projectKey}/resources`, "page");
+    revalidatePath(`/${projectKey}/logs`, "page");
   };
 
-  console.log(data);
   return (
     <Logs
       projectKey={projectKey}
       logs={data?.logs}
-      totalLogs={data?.totalLogs}
       first={data?.first}
       last={data?.last}
-      startDate={data?.startDate}
-      endDate={data?.endDate}
       revalidate={revalidate}
     />
   );

@@ -187,7 +187,6 @@ export const editUser = async (req: Request, res: Response) => {
     UserDirectory.roleAssigned = undefined;
 
     if (assignRole) {
-      console.log(assignRole);
       const roleExists = await RoleModel.findOne({
         projectId: project._id,
         tenantId: { $in: [UserDirectory.tenantId, globalTenant._id] },

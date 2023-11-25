@@ -39,7 +39,5 @@ export const advanceFilter = ({ q, toFind }: advanceFilter) => {
 
   const searchTerm = searchTermParts.join(" ");
 
-  console.log({ filters, searchTerm });
-
   return { filters, searchTerm };
 };

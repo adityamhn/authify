@@ -34,8 +34,11 @@ export const getAllLogs = async ({
     `/project/logs?q=${q}${
       starting_after ? `&starting_after=${starting_after}` : ""
     }${ending_before ? `&ending_before=${ending_before}` : ""}
-    ${start_date ? `&start_date=${start_date}` : ""}
-    ${end_date ? `&end_date=${end_date}` : ""}`,
+    ${
+      start_date && end_date
+        ? `&start_date=${start_date}&end_date=${end_date}`
+        : ""
+    }`,
     { projectKey },
     rsid && {
       headers: {

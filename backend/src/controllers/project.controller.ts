@@ -145,39 +145,20 @@ export const getProjectLogs = async (req: Request, res: Response) => {
       q = "",
       starting_after = false,
       ending_before = false,
-      start_date,
-      end_date,
     }: any = req.query;
     q = decodeQuery(q.toString());
-
 
     const { filters, searchTerm } = advanceFilter({
       q,
       toFind: ["user", "tenant", "resource", "action"],
     });
 
-    console.log(`"${start_date}"`, `"${end_date}"`);
-
-    start_date = start_date
-      ? moment(start_date).startOf("day")
-      : moment().subtract(1, "month").startOf("day");
-
-    end_date = end_date ? moment(end_date).endOf("day") : moment().endOf("day");
-
-
-
     const query: any = {
       projectId: project._id,
-      timestamp: {
-        $gte: Number(moment(start_date).unix()),
-        $lte: Number(moment(end_date).unix()),
-      },
     };
 
-    console.log(query);
-
     const sort: any = {
-      _id: 1,
+      _id: -1,
     };
 
     if (filters?.tenant?.length > 0) {
@@ -205,17 +186,13 @@ export const getProjectLogs = async (req: Request, res: Response) => {
       ];
     }
 
-    const totalLogs = await LogModel.find(query, {
-      _id: 1,
-    }).countDocuments();
-
     const lastDoc = await LogModel.findOne(query, {
       _id: 1,
-    }).sort({ _id: -1 });
+    }).sort({ _id: 1 });
 
     const firstDoc = await LogModel.findOne(query, {
       _id: 1,
-    }).sort({ _id: 1 });
+    }).sort({ _id: -1 });
 
     if (starting_after && lastDoc?._id.toString() !== starting_after) {
       const log = await LogModel.findOne({
@@ -230,10 +207,10 @@ export const getProjectLogs = async (req: Request, res: Response) => {
       }
 
       query._id = {
-        $gt: log._id,
+        $lt: log._id,
       };
 
-      sort._id = 1;
+      sort._id = -1;
     }
 
     if (ending_before && firstDoc?._id.toString() !== ending_before) {
@@ -249,10 +226,10 @@ export const getProjectLogs = async (req: Request, res: Response) => {
       }
 
       query._id = {
-        $lt: log._id,
+        $gt: log._id,
       };
 
-      sort._id = -1;
+      sort._id = 1;
     }
 
     interface ReturnType {
@@ -279,8 +256,8 @@ export const getProjectLogs = async (req: Request, res: Response) => {
       reason: 1,
       metadata: 1,
     })
-      .limit(100)
-      .sort(sort);
+      .sort(sort)
+      .limit(100);
 
     const firstpage =
       logs[0]._id.toString() === firstDoc?._id.toString() ? true : false;
@@ -313,9 +290,6 @@ export const getProjectLogs = async (req: Request, res: Response) => {
       logs: returnLogs,
       first: firstpage ? true : false,
       last: lastpage ? true : false,
-      totalLogs,
-      startDate: start_date,
-      endDate: end_date,
     });
   } catch (err) {
     console.log(err);
