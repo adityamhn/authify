@@ -1,9 +1,11 @@
 
 # Authify: Role-Based Access Control Simplified (Under development)
 
-**Authify** is an innovative Role-Based Access Control (RBAC) platform designed to streamline the process of building and managing permissions. Our no-code platform offers an intuitive web interface, making authorization management as simple as ticking a checkbox. 
+**Authify** is an innovative Role-Based Access Control (RBAC) platform designed to streamline the process of building and managing permissions. 
 
-Authify's user-friendly approach ensures a hassle-free experience in securing your applications.
+#### Key features:
+- **Authify** features an intuitive web interface for easy authorization management – think ticking a checkbox simple!
+- Plus, an easy-to-implement SDK to integrate access control seamlessly into your applications. - https://www.npmjs.com/package/authify
 
 ## Getting Started
 
