@@ -1,4 +1,4 @@
-
+![Authify logo](https://i.postimg.cc/9FXtgQ4B/authify-full.png)
 # Authify: Role-Based Access Control Simplified (Under development)
 
 **Authify** is an innovative Role-Based Access Control (RBAC) platform designed to streamline the process of building and managing permissions. 
@@ -69,7 +69,7 @@ npm run dev
 Confirm the frontend is operational by navigating to [http://127.0.0.1:3000](http://127.0.0.1:3000).  
 
 #### YAY!!! NOW YOU ARE SET TO START HACKING!
-![Alt Text](https://media.tenor.com/YbmQHDSJvbkAAAAC/thumbs-up-hacker.gif)
+![Random GIF](https://media.tenor.com/YbmQHDSJvbkAAAAC/thumbs-up-hacker.gif)
 
 
 
