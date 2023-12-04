@@ -29,7 +29,7 @@ const ApiKeysSettings = ({ apiKeys, revalidate, projectKey }) => {
                         <PrimaryButton size="small" icon={<PlusOutlined />} className={styles.settingsSectionButton} onClick={() => setCreateKeyModal(true)}>New API key</PrimaryButton>
                     </Col>
                     <Col span={16} className={styles.settingsInputSection}>
-                        <APIKeysTable apiKeys={apiKeys} projectKey={projectKey} />
+                        <APIKeysTable apiKeys={apiKeys} projectKey={projectKey} revalidate={revalidate} />
                     </Col>
                 </Row>
 

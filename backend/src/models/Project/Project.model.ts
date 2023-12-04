@@ -13,6 +13,7 @@ export interface TenantsDoc {
 }
 
 export interface ApiKeyDoc {
+  _id?: mongoose.Types.ObjectId;
   key: string;
   createdAt: Date;
   identifier: string;

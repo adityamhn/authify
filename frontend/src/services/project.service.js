@@ -57,6 +57,14 @@ export const createNewApiKey = async ({ projectKey, identifier }) => {
   return response.data;
 };
 
+export const deleteApiKey = async ({ projectKey, apiKeyId }) => {
+  const response = await apiClient.post("/project/api-key/delete", {
+    projectKey,
+    apiKeyId
+  });
+  return response.data;
+};
+
 export const getAllApiKeys = async ({ projectKey, rsid }) => {
   const response = await apiClient.post(
     `/project/api-key/all`,
@@ -67,5 +75,18 @@ export const getAllApiKeys = async ({ projectKey, rsid }) => {
       },
     }
   );
+  return response.data;
+};
+
+export const updateProjectDetails = async ({
+  newProjectKey,
+  projectName,
+  projectKey,
+}) => {
+  const response = await apiClient.post("/project/update", {
+    projectKey,
+    newProjectKey,
+    projectName,
+  });
   return response.data;
 };

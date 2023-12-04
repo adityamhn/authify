@@ -306,7 +306,7 @@ const PolicyTable = ({ projectKey, setAddResourceModal, setAddRoleModal, policy,
                 )}
             />
             {noOfEdits > 0 &&
-                <Row align="middle" justify="space-between" className={styles.policySaveCard}>
+                <Row align="middle" justify="space-between" className={styles.changesSaveCard}>
                     <div className={styles.policySaveCardText}>You have {noOfEdits} unsaved changes</div>
                     <Row align="middle" justify="space-between" className={styles.actionsSection}>
                         <PrimaryButton

@@ -290,54 +290,7 @@
         font-weight: 500;
     }
 
-    .policySaveCard {
-        position: fixed;
-        height: 3.2rem;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 100;
-        background-color: var(--active-bg-hover);
-        animation: slideup 0.3s ease-in;
-        box-shadow: 0px -2px 30px rgba(#fff, 0.1);
-        padding: 0 2rem;
 
-        // exit animation
-        &.exit {
-            animation: slidedown 0.3s ease-in;
-        }
-
-        @keyframes slideup {
-            from {
-                transform: translateY(100%);
-            }
-            to {
-                transform: translateY(0%);
-            }
-        }
-
-        @keyframes slidedown {
-            from {
-                transform: translateY(0%);
-            }
-            to {
-                transform: translateY(100%);
-            }
-        }
-
-        .saveButton {
-            width: fit-content;
-            height: 2.2rem;
-            font-size: nth($fontSize, 2);
-        }
-
-        .cancelButton {
-            padding: 0 1rem;
-            height: 2.2rem;
-            color: var(--text-secondary);
-            font-size: nth($fontSize, 2);
-        }
-    }
 }
 
 .settingsTableContainer {
@@ -452,5 +405,58 @@
 
             }
         }
+    }
+}
+
+.changesSaveCard {
+    position: fixed;
+    height: 3.2rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background-color: var(--active-bg-hover);
+    animation: slideup 0.3s ease-in;
+    box-shadow: 0px -2px 30px rgba(#fff, 0.1);
+    padding: 0 2rem;
+
+    .policySaveCardText {
+        color: var(--text);
+    }
+
+    // exit animation
+    &.exit {
+        animation: slidedown 0.3s ease-in;
+    }
+
+    @keyframes slideup {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0%);
+        }
+    }
+
+    @keyframes slidedown {
+        from {
+            transform: translateY(0%);
+        }
+        to {
+            transform: translateY(100%);
+        }
+    }
+
+    .saveButton {
+        width: fit-content;
+        height: 2.2rem;
+        font-size: nth($fontSize, 2);
+    }
+
+    .cancelButton {
+        padding: 0 1rem;
+        height: 2.2rem;
+        color: var(--text-secondary);
+        font-size: nth($fontSize, 2);
     }
 }

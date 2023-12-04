@@ -83,13 +83,13 @@ const Header = ({ projectKey, user, projects }) => {
               gap: "1.5rem"
             }}
           >
-            <div className={`${styles.profileDropdownContainer} ${styles.notificationContainer}`}>
+            {/* <div className={`${styles.profileDropdownContainer} ${styles.notificationContainer}`}>
               <Dropdown trigger={["click"]} >
                 <Row align="middle" className={styles.profileDropdownButton}>
                   <RiNotification2Line className={styles.downArrow} />
                 </Row>
               </Dropdown>
-            </div>
+            </div> */}
             <div className={styles.profileDropdownContainer}>
               <Dropdown trigger={["click"]} dropdownRender={() => <ProfileDropdown handleLogout={handleLogout} setManageAccountModalVisible={setManageAccountModalVisible} />}>
                 <Row align="middle" className={styles.profileDropdownButton}>

@@ -8,7 +8,6 @@ import { decodeQuery } from "../utils/queryParser";
 import { advanceFilter } from "../utils/filters";
 import LogModel from "../models/Log/Log.model";
 import mongoose from "mongoose";
-import moment from "moment";
 
 export const checkValidProject = async (req: Request, res: Response) => {
   try {
@@ -365,6 +364,62 @@ export const createApiKey = async (req: Request, res: Response) => {
   }
 };
 
+export const deleteApiKey = async (req: Request, res: Response) => {
+  try {
+    const { userId, projectId } = res.locals;
+
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized! User not found." });
+    }
+
+    if (!projectId) {
+      return res.status(401).json({ message: "project Key Not Found!" });
+    }
+
+    const project = await ProjectModel.findOne({
+      _id: projectId,
+      "projectMembers.email": user.email,
+    });
+
+    if (!project) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized! Project not found." });
+    }
+
+    const { apiKeyId } = req.body;
+
+    if (!apiKeyId) {
+      return res.status(400).json({ message: "Invalid payload!" });
+    }
+
+    const apiKeyIndex = project.apiKeys.findIndex(
+      (apiKey) => apiKey._id?.toString() == apiKeyId
+    );
+
+    if (apiKeyIndex < 0) {
+      return res.status(400).json({ message: "Invalid API Key!" });
+    }
+
+    project.apiKeys.splice(apiKeyIndex, 1);
+
+    await project.save();
+
+    return res.status(201).json({
+      message: "API Key deleted successfully",
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 export const getAllApiKeys = async (req: Request, res: Response) => {
   try {
     const { userId, projectId } = res.locals;
@@ -399,6 +454,74 @@ export const getAllApiKeys = async (req: Request, res: Response) => {
     return res.status(201).json({
       message: "API Keys fetched successfully",
       apiKeys,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const updateProjectDetails = async (req: Request, res: Response) => {
+  try {
+    const { userId, projectId } = res.locals;
+
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized! User not found." });
+    }
+
+    if (!projectId) {
+      return res.status(401).json({ message: "project Key Not Found!" });
+    }
+
+    const project = await ProjectModel.findOne({
+      _id: projectId,
+      "projectMembers.email": user.email,
+    });
+
+    if (!project) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized! Project not found." });
+    }
+
+    const { projectName, newProjectKey } = req.body;
+
+    if (!projectName && !newProjectKey) {
+      return res.status(400).json({ message: "Invalid payload!" });
+    }
+
+    if (!roleAndResourceRegex.test(newProjectKey)) {
+      return res.status(400).json({ message: "Invalid project key!" });
+    }
+
+    const projectAlreadyExists = await ProjectModel.findOne({
+      _id: { $ne: project._id },
+      projectKey: newProjectKey,
+      "projectMembers.email": user.email,
+      "projectMembers.role": "owner",
+    });
+
+    if (projectAlreadyExists) {
+      return res.status(400).json({
+        message:
+          "Project key already exists. Please choose a different key for your project.",
+      });
+    }
+
+    project.projectName = projectName;
+    project.projectKey = newProjectKey;
+
+    await project.save();
+
+    return res.status(201).json({
+      message: "Project details updated successfully",
+      projectKey: project.projectKey,
     });
   } catch (err) {
     console.log(err);

@@ -93,10 +93,10 @@ const LoginPage = ({ email }) => {
                         htmlType='submit'
                         loading={userLoginMutation.isLoading}
                     >Login</PrimaryButton>
-                    <PrimaryButton
+                    {/* <PrimaryButton
                         buttonType="text"
                         className={styles.forgotPasswordBtn}
-                    >Forgot Password?</PrimaryButton>
+                    >Forgot Password?</PrimaryButton> */}
                 </Form>
 
             </div>
