@@ -154,7 +154,7 @@ const AttachResourcesModal = ({
                                         treeCheckable
                                         treeData={formatTreeData(availableResourceList?.resources ?? [])}
                                         maxTagCount={3}
-                                        style={{ width: '100%' }}
+                                        style={{ width: '100%', overflow: 'auto'}}
                                         showSearch
                                         treeDefaultExpandAll
                                         className={`${formStyles.formTreeSelect} ${styles.modalInput}`}

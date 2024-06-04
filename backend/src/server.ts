@@ -13,6 +13,7 @@ import RedisStore from "connect-redis";
 
 import mongoose from "mongoose";
 import mongoSanitize from "express-mongo-sanitize";
+import multer from "multer";
 
 import getSecrets from "./utils/getSecrets";
 import { authRoutes } from "./routes/auth.routes";
@@ -168,6 +169,29 @@ const initializeApp = async () => {
 
   // Tenant routes
   app.use("/api/tenant", tenantRoutes);
+
+  app.use(function (err: any, req: any, res: any, next: any) {
+    console.log("Error occurred but handled - ", err);
+    console.log("Error occurred but handled - ", err?.code);
+
+    if (err instanceof multer.MulterError) {
+      if (err.code === "LIMIT_FILE_SIZE") {
+        return res.status(400).json({ message: "File size limit exceeded" });
+      }
+
+      if (err.code === "LIMIT_UNEXPECTED_FILE") {
+        return res
+          .status(400)
+          .json({ message: "Unexpected File type or Number of File(s)" });
+      }
+
+      return res.status(400).json({ message: "Error occurred uploading file" });
+    }
+
+    return res.status(400).json({
+      message: "Something went wrong, please try again later",
+    });
+  });
 
   app.listen(port, async () => {
     try {

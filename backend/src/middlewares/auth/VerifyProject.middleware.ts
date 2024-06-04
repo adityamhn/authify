@@ -10,6 +10,7 @@ export const verifyProject = async (
   const userId = res.locals.userId;
   const { projectKey } = req.body;
 
+
   const user = await UserModel.findOne({
     _id: userId?.toString(),
   });

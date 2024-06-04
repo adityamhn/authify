@@ -8,7 +8,13 @@ import TenantModel, { TenantDoc } from "../models/Tenant/Tenant.model";
 import mongoose from "mongoose";
 import { decodeQuery } from "../utils/queryParser";
 import RoleModel from "../models/Role/Role.model";
-import { getGlobalTenant } from "../utils/services/constants";
+import {
+  getGlobalTenant,
+  validateUploadDataResource,
+} from "../utils/services/constants";
+import path from "path";
+import fs from "fs";
+import csv from "csv-parser";
 
 // checked
 export const createNewResource = async (req: Request, res: Response) => {
@@ -91,7 +97,10 @@ export const createNewResource = async (req: Request, res: Response) => {
 
     if (keyAlreadyExists) {
       return res.status(400).json({
-        message: validTenant.type === "global" ? "A resource with this key already exists under another tenant. Please use a unique key for global tenant or choose a different tenant." : "Resource key already exists for this tenant/global tenant.",
+        message:
+          validTenant.type === "global"
+            ? "A resource with this key already exists under another tenant. Please use a unique key for global tenant or choose a different tenant."
+            : "Resource key already exists for this tenant/global tenant.",
       });
     }
 
@@ -770,6 +779,86 @@ export const getResourcesListTenant = async (req: Request, res: Response) => {
     return res.status(200).json({
       message: "Resources fetched successfully",
       resources,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const uploadResources = async (req: Request, res: Response) => {
+  try {
+    const { userId, projectId } = res.locals;
+
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized! User not found." });
+    }
+
+    if (!projectId) {
+      return res.status(401).json({ message: "project Key Not Found!" });
+    }
+
+    const project = await ProjectModel.findOne({
+      _id: projectId,
+      "projectMembers.email": user.email,
+    });
+
+    if (!project) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized! Project not found." });
+    }
+
+    const { fileType } = req.body;
+
+    if (["csv", "json"].indexOf(fileType) === -1) {
+      return res.status(400).json({ message: "Invalid file type" });
+    }
+
+    const file = req.file as Express.Multer.File;
+
+    if (!file) {
+      return res.status(400).json({ message: "File not found" });
+    }
+
+    const originalFileType = path.extname(file.originalname).toLowerCase();
+
+    if (originalFileType !== `.${fileType}`) {
+      return res.status(400).json({ message: "Invalid file type" });
+    }
+
+    let validData: any = null;
+
+    if (fileType === "json") {
+      const rawData = fs.readFileSync(file.path);
+      const jsonData = JSON.parse(rawData.toString());
+      validData = await validateUploadDataResource(jsonData, project._id);
+    }
+
+    if (fileType === "csv") {
+      const jsonData: any = [];
+      fs.createReadStream(file.path)
+        .pipe(csv())
+        .on("data", (data) => jsonData.push(data))
+        .on("end", async () => {
+          validData = await validateUploadDataResource(jsonData, project._id);
+        });
+    }
+
+    if (!validData) {
+      return res.status(400).json({ message: "Invalid file data" });
+    }
+
+    await ResourceModel.insertMany(validData);
+
+    return res.status(200).json({
+      message: "Resources uploaded successfully",
     });
   } catch (err) {
     console.log(err);

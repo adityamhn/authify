@@ -207,7 +207,7 @@ const Resources = ({ projectKey, resources, revalidate, totalResources, first, l
 
         {/* Modals */}
         <AddResourceModal visible={addResourceModal} setVisible={setAddResourceModal} projectKey={projectKey} revalidate={revalidate} />
-        <UploadModal visible={uploadModal} setVisible={setUploadModal} type="resource" label="Resource" />
+        <UploadModal visible={uploadModal} setVisible={setUploadModal} type="resource" label="Resource" projectKey={projectKey} />
       </div>
     </>
 

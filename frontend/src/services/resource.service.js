@@ -88,7 +88,16 @@ export const getAllResource = async ({
 export const getResourceList = async ({ projectKey, tenantKey }) => {
   const response = await apiClient.post("/resource/list", {
     projectKey,
-    tenantKey
+    tenantKey,
+  });
+  return response.data;
+};
+
+export const uploadResourceList = async (body) => {
+  const response = await apiClient.post("/resource/upload", body, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   });
   return response.data;
 };

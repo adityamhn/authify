@@ -13,7 +13,10 @@ const reducers = combineReducers({
 
 let store = configureStore({
   reducer: reducers,
-  middleware: [thunk],
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk,
+    }),
   devTools: true,
 });
 
@@ -29,7 +32,10 @@ if (isClient) {
 
   store = configureStore({
     reducer: persistedReducer,
-    middleware: [thunk],
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        thunk,
+      }),
   });
 }
 

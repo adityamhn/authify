@@ -4,7 +4,6 @@
     width: 100%;
 
     .formRow {
-
         .formRowButtonContainer {
             display: flex;
             justify-content: flex-end;
@@ -55,8 +54,7 @@
         }
 
         .formInputPassword {
-
-        @extend .formInput;
+            @extend .formInput;
 
             :global {
                 .ant-input {
@@ -65,26 +63,19 @@
                     &::placeholder {
                         color: var(--placeholder);
                     }
-        
+
                     &:disabled {
                         color: var(--text-secondary);
                     }
                 }
-                
-                                    .ant-input-suffix {
-                
-                                        .ant-input-password-icon {
-                
-                                            color: var(--text-500);
-                                        }
-                                    }
+
+                .ant-input-suffix {
+                    .ant-input-password-icon {
+                        color: var(--text-500);
+                    }
+                }
             }
-
-
-            
         }
-
-
 
         .formTextArea {
             @extend .formInput;
@@ -174,7 +165,6 @@
 
         .formTreeSelect {
             @extend .formSelect;
-
         }
 
         .formRadioGroup {
@@ -210,7 +200,6 @@
         }
 
         .formDragger {
-
             .draggerContainer {
                 color: var(--text);
                 padding: 1rem 2rem;
@@ -219,21 +208,42 @@
                     font-size: nth($fontSize, 3);
                     font-weight: 600;
                     margin-bottom: 0.5rem;
-
                 }
 
                 .draggerSubtitle {
                     font-size: nth($fontSize, 2);
                     font-weight: 500;
                     color: var(--text-secondary);
+                }
+            }
 
+            :global {
+                .ant-upload-list {
+                    .anticon {
+                        color: var(--text-secondary);
+                    }
+
+                    .anticon-delete {
+                        color: var(--danger);
+
+                        &:hover {
+                            color: var(--danger);
+                        }
+                    }
+
+                    .ant-upload-list-item {
+                        color: var(--text);
+                    }
+
+                    .ant-upload-list-item-action {
+                        opacity: 1;
+                    }
                 }
             }
         }
     }
 
     .formItemLabelRow {
-
         :global {
             .ant-form-item-label {
                 white-space: nowrap;
@@ -250,12 +260,9 @@
     }
 
     .formListRow {
-
         .formListCol {
-                padding-right: 1rem;
-
+            padding-right: 1rem;
         }
-
     }
 
     .formListAddButton {
